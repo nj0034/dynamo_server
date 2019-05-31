@@ -31,10 +31,12 @@ def get_or_abort_404(hash_key):
 
 class Content(Resource):
     def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('key')
-        args = parser.parse_args()
-        hash_key = hash_sha256(args['key'])
+        # parser = reqparse.RequestParser()
+        # parser.add_argument('key')
+        # args = parser.parse_args()
+        # hash_key = hash_sha256(args['key'])
+        key = request.args['key']
+        hash_key = hash_sha256(key)
 
         item = get_or_abort_404(hash_key)
 
@@ -56,6 +58,7 @@ class Content(Resource):
     def put(self):
         # uuid = request.form['uuid']
         # title = request.form['title']
+        # print(request.data)
         key = request.form['key']
         content = request.form['content']
 
@@ -70,7 +73,7 @@ class Content(Resource):
             },
             ReturnValues="UPDATED_NEW",
         )
-        return {'response': response['ResponseMetadata']}
+        return {'response': response['ResponseMetadata']}, 201
 
     def delete(self):
         key = request.form['key']

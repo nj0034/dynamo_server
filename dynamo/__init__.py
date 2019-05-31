@@ -30,4 +30,9 @@ def create_app(test_config=None):
 
     Api(app).add_resource(scrap_book.Content, '/scrap_book')
 
+    app.debug = True
+    # app.config.update(
+    #     DEBUG=True
+    # )
+
     return app
